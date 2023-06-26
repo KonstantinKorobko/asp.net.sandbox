@@ -19,7 +19,7 @@ app.Run(async (context) =>
 
     string expressionForGuid = @"^/api/users/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$";
 
-    if ((path == "api/users") && (request.Method == "GET"))
+    if ((path == "/api/users") && (request.Method == "GET"))
     {
         await GetAllPeaple(responce);
     }
@@ -28,11 +28,11 @@ app.Run(async (context) =>
         string? id = path.Value?.Split("/")[3];
         await GetPerson(id, responce);
     }
-    else if ((path == "api/users") && (request.Method == "POST"))
+    else if ((path == "/api/users") && (request.Method == "POST"))
     {
         await CreatePersone(responce, request);
     }
-    else if ((path == "api/users") && (request.Method == "PUT"))
+    else if ((path == "/api/users") && (request.Method == "PUT"))
     {
         await UpdatePersone(responce, request);
     }
