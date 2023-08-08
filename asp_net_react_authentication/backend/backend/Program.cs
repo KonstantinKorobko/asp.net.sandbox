@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using WebApp;
 using WebApp.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.IdentityModel.Tokens;
+using backend.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +43,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.FallbackPolicy = options.DefaultPolicy;
 });*/
+
 /*builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyAllowSpecificOrigins",
@@ -52,6 +57,23 @@ builder.Services.AddAuthorization(options =>
 });*/
 
 builder.Services.AddControllers();
+
+/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = AuthenticationPar.ISSUER,
+            ValidateAudience = true,
+            ValidAudience = AuthenticationPar.AUDIENCE,
+            ValidateLifetime = true,
+            IssuerSigningKey = AuthenticationPar.GetSymmetricSecurityKey(),
+            ValidateIssuerSigningKey = true,
+        };
+    });
+
+builder.Services.AddAuthorization();*/
 
 var app = builder.Build();
 

@@ -8,11 +8,13 @@ namespace WebApp
         public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) {}
 
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<UserAuthent> UsersAuthent { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //get?
             modelBuilder.Entity<AppUser>().ToTable("Users");
+
+            modelBuilder.Entity<UserAuthent>().ToTable("UsersAuthent");
         }
     }
 }
