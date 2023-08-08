@@ -5,17 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using WebApp;
 using WebApp.Models;
 
 namespace backend.Controllers
 {
     //del later
-    public class ResultOut
+   /* public class ResultOut
     {
         public string? UserName { get; set; }
         public Guid Id { get; set; }
-    }
+    }*/
     //del later
 
 
@@ -24,19 +25,20 @@ namespace backend.Controllers
     public class LoginController : Controller
     {
         private readonly UserDbContext _context;
-        public LoginController(UserDbContext context)
+        private readonly IConfiguration _configuration;
+
+        public LoginController(UserDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
-
-        public static UserAuthent user = new();
 
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> Login(UserAuthent request)
         {
             //TODO password hash BCript?
-            var user = await _context.UsersAuthent.FindAsync(request.UserName);
+            UserAuthent user = await _context.UsersAuthent.FindAsync(request.UserName);
 
             if (user == null)
             {
@@ -46,24 +48,35 @@ namespace backend.Controllers
             {
                 return NotFound("Wrong password!");
             }
-            /*var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, User.UserName) };
-            var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-            claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)), // время действия 2 минуты
-                    signingCredentials: new SigningCredentials(AuthenticationPar.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-
-            return new JwtSecurityTokenHandler().WriteToken(jwt);*/
-
 
             //*del later
-            ResultOut result = new();
+            /*ResultOut result = new();
             result.UserName = user.UserName;
-            result.Id = user.Id;
+            result.Id = user.Id
+            return Ok(result);;*/
             //*del later
 
-            return Ok(result);
+            string token = CreateJWT(user);
+
+            return Ok(token);
+        }
+
+        private string CreateJWT(UserAuthent userAuthent)
+        {
+            List<Claim> claims = new List<Claim> { new Claim(ClaimTypes.Name, userAuthent.UserName) };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: creds);
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
         }
     }
 }
