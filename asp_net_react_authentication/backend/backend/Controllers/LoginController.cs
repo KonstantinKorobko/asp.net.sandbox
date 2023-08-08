@@ -40,9 +40,12 @@ namespace backend.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return NotFound("User no found!");
             }
-
+            if (user.Password != request.Password)
+            {
+                return NotFound("Wrong password!");
+            }
             /*var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, User.UserName) };
             var jwt = new JwtSecurityToken(
                     issuer: AuthOptions.ISSUER,
