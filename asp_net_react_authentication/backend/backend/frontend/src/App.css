@@ -1,0 +1,17 @@
+ul li a {
+    color: #000;
+    font-size: 18px;
+   }
+   
+   ul li a:hover {
+    color: #56b45a;
+   }
+   
+   ul li a.active {
+    color: #00a8ff;
+   }
+
+   .main_menu {
+    margin: 5px;
+    padding: 10px;
+   }

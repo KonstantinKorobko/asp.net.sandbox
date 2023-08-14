@@ -1,25 +1,20 @@
-//import './App.css';
+import './App.css';
 //import TestCORS from "./TestCORS";
 import {
-  BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route
 } from "react-router-dom";
 
 import Home from './Home';
 import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 function App() {
   return (
-    <Router>
-      <div className="links_box">        
-        <Link className="links" to="/login">login</Link>  
-      </div>
-
       <Routes>
         <Route path="/spaApp" element={<Home />} />
-        <Route path="/login" element={<SignIn />} />
+        <Route path="/spaApp/login" element={<SignIn />} />
+        <Route path="/spaApp/register" element={<SignUp />} />
       </Routes>
-    </Router>
   )
 }
 

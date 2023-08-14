@@ -1,7 +1,11 @@
-const Home = (props) => {
-    
+import Navigation from './Navigation';
+
+const Home = () => {    
     return (
-        <h1 className="main_page">Welcome.</h1>
+        <div className="container_home">
+            <h1>Welcome!</h1>         
+            <Navigation/>
+        </div>        
     )
 }
 
