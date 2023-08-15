@@ -10,6 +10,12 @@ const SignUp = (props) => {
                 E-mail:     <input type="e-mail" name="email" />
                 <br></br>
                 <br></br>
+                FirstMidName:   <input type="text" name="first_mid_name" />
+                <br></br>
+                <br></br>
+                LastName:   <input type="text" name="last_name" />
+                <br></br>
+                <br></br>
                 Password:   <input type="password" name="password" />
                 <br></br>
                 <br></br>

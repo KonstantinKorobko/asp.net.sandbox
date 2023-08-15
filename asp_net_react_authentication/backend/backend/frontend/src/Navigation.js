@@ -1,25 +1,25 @@
-//import { NavLink } from 'react-router-dom'
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const Navigation = (props) => {    
-    /*return (
-        <nav>
-            <ul>
-                <li>
-                    <NavLink to="/spaApp/login">SignIn</NavLink>
-                </li>
-            </ul>
-        </nav>
-    )*/
+const Navigation = () => {
+    const navigate = useNavigate();
+
+    const signIn = () => {
+        navigate('/spaApp/login');
+    };
+
+    const signUp = () => {
+        navigate('/spaApp/register');
+    };
+
     return(
         <table>
             <tbody>
                 <tr className='main_menu'>
                     <td>
-                        <input type="button" name="sign_in" value="sign in" />
+                        <input type="button" onClick={signIn} name="sign_in" value="sign in" />
                     </td>
                     <td>
-                        <input type="button" name="sign_up" value="sign up" />
+                        <input type="button" onClick={signUp} name="sign_up" value="sign up" />
                     </td>
                 </tr> 
             </tbody>
