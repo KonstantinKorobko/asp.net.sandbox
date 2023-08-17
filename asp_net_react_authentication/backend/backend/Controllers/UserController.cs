@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using backend.Models;
+using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    [ApiController]    
     //[ProducesResponseType(StatusCodes.Status201Created)]
     //[ProducesResponseType(StatusCodes.Status400BadRequest)]
     public class UserController : ControllerBase
@@ -16,12 +16,14 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
+        [Route("api/User")]
         public ActionResult<IEnumerable<AppUser>> GetUsers()
         {
             return _context.Users;
         }
 
         [HttpGet("{Id:Guid}")]
+        [Route("api/User")]
         public async Task<ActionResult<AppUser>> GetById(Guid id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -35,6 +37,28 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [Route("api/User/isname")]
+        public async Task<ActionResult> IsUserName(FastUserName user)
+        {
+            var userName = await _context.UsersAuthent.FindAsync(user.UserName);
+
+            FastUserName nameResponse = new();
+
+            if (userName == null)
+            {
+
+                nameResponse.UserName = "";
+            }
+
+            //ToDo check for user name correct
+
+            nameResponse.UserName = "User name already exists.";
+
+            return Ok(nameResponse);
+        }
+
+        [HttpPost]
+        [Route("api/User")]
         public async Task<ActionResult> Create(AppUser user)
         {
             await _context.Users.AddAsync(user);
@@ -44,6 +68,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPut]
+        [Route("api/User")]
         public async Task<ActionResult> Update(AppUser user)
         {
             _context.Users.Update(user);
@@ -52,6 +77,7 @@ namespace WebApp.Controllers
         }
 
         [HttpDelete("{Id:Guid}")]
+        [Route("api/User")]
         public async Task<ActionResult> Delete(Guid id)
         {
             var user = await _context.Users.FindAsync(id);

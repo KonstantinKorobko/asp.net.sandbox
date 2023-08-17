@@ -1,4 +1,5 @@
 ﻿using backend.Helpers;
+using backend.Models;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,14 +32,14 @@ namespace backend.Controllers
         {
             _context = context;
             _configuration = configuration;
-        }
+        }        
 
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> Login(UserAuthent request)
         {
             //TODO password hash BCript?
-            UserAuthent user = await _context.UsersAuthent.FindAsync(request.UserName);
+            var user = await _context.UsersAuthent.FindAsync(request.UserName);
 
             if (user == null)
             {
@@ -48,13 +49,6 @@ namespace backend.Controllers
             {
                 return NotFound("Wrong password!");
             }
-
-            //*del later
-            /*ResultOut result = new();
-            result.UserName = user.UserName;
-            result.Id = user.Id
-            return Ok(result);;*/
-            //*del later
 
             string token = CreateJWT(user);
 
