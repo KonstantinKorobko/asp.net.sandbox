@@ -37,23 +37,31 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [Route("api/User/isemail")]
+        public async Task<ActionResult> IsEmail(FastEmail email)
+        {
+            var userEmail = await _context.IdsEmails.FindAsync(email.Email);
+
+            if (userEmail == null)
+            {
+                return NotFound("E-mail not found.");
+            }            
+
+            return Ok();
+        }
+
+        [HttpPost]
         [Route("api/User/isname")]
         public async Task<ActionResult> IsUserName(FastUserName user)
         {
             var userName = await _context.IdsUsers.FindAsync(user.UserName);
 
-            FastUserName nameResponse = new();
-
             if (userName == null)
             {
-                nameResponse.UserName = "";
+                return NotFound("User name not found.");
             }
 
-            //ToDo check for user name correct
-
-            nameResponse.UserName = "User name already exists.";
-
-            return Ok(nameResponse);
+            return Ok();
         }
 
         [HttpPost]
