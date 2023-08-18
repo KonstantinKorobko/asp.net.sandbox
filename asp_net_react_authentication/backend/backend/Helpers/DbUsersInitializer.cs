@@ -1,4 +1,5 @@
-﻿using WebApp.Models;
+﻿using backend.Models;
+using WebApp.Models;
 
 namespace WebApp.Helpers
 {
@@ -24,20 +25,33 @@ namespace WebApp.Helpers
                 new AppUser{UserName = "Nino", Email = "a8@mail.com", Password = "12345", FirstMidName = "Nino", LastName = "Olivetto"}
             };
 
-            var usersAuthent = new UserAuthent[]
+            var idsUsers = new IdByUserName[]
             {
-                new UserAuthent{UserName = users[0].UserName, Password = users[0].Password, Id = users[0].Id},
-                new UserAuthent{UserName = users[1].UserName, Password = users[1].Password, Id = users[1].Id},
-                new UserAuthent{UserName = users[2].UserName, Password = users[2].Password, Id = users[2].Id},
-                new UserAuthent{UserName = users[3].UserName, Password = users[3].Password, Id = users[3].Id},
-                new UserAuthent{UserName = users[4].UserName, Password = users[4].Password, Id = users[4].Id},
-                new UserAuthent{UserName = users[5].UserName, Password = users[5].Password, Id = users[5].Id},
-                new UserAuthent{UserName = users[6].UserName, Password = users[6].Password, Id = users[6].Id},
-                new UserAuthent{UserName = users[7].UserName, Password = users[7].Password, Id = users[7].Id}
+                new IdByUserName{UserName = users[0].UserName, Id = users[0].Id},
+                new IdByUserName{UserName = users[1].UserName, Id = users[1].Id},
+                new IdByUserName{UserName = users[2].UserName, Id = users[2].Id},
+                new IdByUserName{UserName = users[3].UserName, Id = users[3].Id},
+                new IdByUserName{UserName = users[4].UserName, Id = users[4].Id},
+                new IdByUserName{UserName = users[5].UserName, Id = users[5].Id},
+                new IdByUserName{UserName = users[6].UserName, Id = users[6].Id},
+                new IdByUserName{UserName = users[7].UserName, Id = users[7].Id}
+            };
+
+            var idsEmails = new IdByEmail[]
+            {
+                new IdByEmail{Email = users[0].Email, Id = users[0].Id},
+                new IdByEmail{Email = users[1].Email, Id = users[1].Id},
+                new IdByEmail{Email = users[2].Email, Id = users[2].Id},
+                new IdByEmail{Email = users[3].Email, Id = users[3].Id},
+                new IdByEmail{Email = users[4].Email, Id = users[4].Id},
+                new IdByEmail{Email = users[5].Email, Id = users[5].Id},
+                new IdByEmail{Email = users[6].Email, Id = users[6].Id},
+                new IdByEmail{Email = users[7].Email, Id = users[7].Id}
             };
 
             context.Users.AddRange(users);
-            context.UsersAuthent.AddRange(usersAuthent);
+            context.IdsUsers.AddRange(idsUsers);
+            context.IdsEmails.AddRange(idsEmails);
 
             context.SaveChanges();
         }

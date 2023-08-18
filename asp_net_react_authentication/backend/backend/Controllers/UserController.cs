@@ -40,13 +40,12 @@ namespace WebApp.Controllers
         [Route("api/User/isname")]
         public async Task<ActionResult> IsUserName(FastUserName user)
         {
-            var userName = await _context.UsersAuthent.FindAsync(user.UserName);
+            var userName = await _context.IdsUsers.FindAsync(user.UserName);
 
             FastUserName nameResponse = new();
 
             if (userName == null)
             {
-
                 nameResponse.UserName = "";
             }
 

@@ -17,11 +17,9 @@ const SignUp = () => {
         setUserName(input.target.value);
     }
 
-     const handleOnClickCreate = async () => {
+    const handleOnClickCreate = async () => {
         const dataObj = {UserName: UserName};
-
         const result = await HelperGetResponseObj(ControllerPost(isNameUrl, dataObj));
-
         setUserNameStatus(result.userName);
     }
 
@@ -31,7 +29,6 @@ const SignUp = () => {
             <form >
                 Login:      <input type="text" value={UserName} onChange={handleAddUserName} name="login" />
                 <p>{UserNameStatus}</p>
-                <br></br>
                 <br></br>
                 E-mail:     <input type="e-mail" name="email" />
                 <br></br>

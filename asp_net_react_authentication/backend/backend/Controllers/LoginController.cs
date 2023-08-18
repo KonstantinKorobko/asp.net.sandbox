@@ -36,16 +36,24 @@ namespace backend.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult> Login(UserAuthent request)
+        public async Task<ActionResult> Login(AuthUser request)
         {
             //TODO password hash BCript?
-            var user = await _context.UsersAuthent.FindAsync(request.UserName);
+            var user = await _context.IdsUsers.FindAsync(request.UserName);
 
-            if (user == null)
+            if (user == null) 
             {
                 return NotFound("User no found!");
             }
-            if (user.Password != request.Password)
+
+            var userData = await _context.Users.FindAsync(user.Id);
+
+            if (userData == null)
+            {
+                return NotFound("User no found!");
+            }
+
+            if (userData.Password != request.Password)
             {
                 return NotFound("Wrong password!");
             }
@@ -55,7 +63,7 @@ namespace backend.Controllers
             return Ok(token);
         }
 
-        private string CreateJWT(UserAuthent userAuthent)
+        private string CreateJWT(IdByUserName userAuthent)
         {
             List<Claim> claims = new List<Claim> { new Claim(ClaimTypes.Name, userAuthent.UserName) };
 

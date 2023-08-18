@@ -2,9 +2,11 @@
 
 namespace backend.Models
 {
-    public class FastUserName
+    public class AuthUser
     {
         [Required]
         public string? UserName { get; set; }
+        [Required]
+        public string? Password { get; set; }
     }
 }
