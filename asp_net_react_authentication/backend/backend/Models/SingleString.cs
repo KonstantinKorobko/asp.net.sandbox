@@ -2,9 +2,9 @@
 
 namespace backend.Models
 {
-    public class FastPassword
+    public class SingleString
     {
         [Required]
-        public string? Password { get; set; }
+        public string? Data { get; set; }
     }
 }

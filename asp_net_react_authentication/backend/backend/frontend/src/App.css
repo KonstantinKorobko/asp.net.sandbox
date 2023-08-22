@@ -15,3 +15,7 @@ ul li a {
     margin: 5px;
     padding: 10px;
    }
+
+   .errorText {
+    color: rgb(251, 54, 54);
+   }

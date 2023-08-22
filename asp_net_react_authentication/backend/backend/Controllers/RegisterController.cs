@@ -16,20 +16,20 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("api/Register/isemail")]
-        public async Task<ActionResult> IsEmail(FastEmail email)
+        public async Task<ActionResult> IsEmail(SingleString email)
         {
-            var userEmail = await _context.IdsEmails.FindAsync(email.Email);
+            var userEmail = await _context.IdsEmails.FindAsync(email.Data);
 
-            FastEmail emailDispatch = new();
+            SingleString emailDispatch = new();
 
             if (userEmail == null)
             {
-                emailDispatch.Email = "";
+                emailDispatch.Data = "Email not found.";
+
+                return NotFound(emailDispatch);
             }
-            else
-            {
-                emailDispatch.Email = "Email already registered.";
-            }
+
+            emailDispatch.Data = "Email already registered.";
 
             //ToDo add email politics
 
@@ -38,44 +38,66 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("api/Register/isname")]
-        public async Task<ActionResult> IsUserName(FastUserName user)
+        public async Task<ActionResult> IsUserName(SingleString user)
         {
-            var userName = await _context.IdsUsers.FindAsync(user.UserName);
+            var userName = await _context.IdsUsers.FindAsync(user.Data);
 
-            FastUserName nameDispatch = new();
+            SingleString nameDispatch = new();
 
             if (userName == null)
             {
-                nameDispatch.UserName = "";
-            }
-            else
-            {
-                nameDispatch.UserName = "User name already exists.";
+                nameDispatch.Data = "User name not found.";
+
+                return NotFound(nameDispatch);
             }
 
-            //ToDo check for user name correct
+            nameDispatch.Data = "User name already exists.";
+
+            //ToDo user name politics
+
+            return Ok(nameDispatch);
+        }
+
+        [HttpPost]
+        [Route("api/Register/isfirstmidname")]
+        public async Task<ActionResult> IsFirstMidName(SingleString user)
+        {
+            SingleString nameDispatch = new();            
+
+            //ToDo name politics
+
+            return Ok(nameDispatch);
+        }
+
+        [HttpPost]
+        [Route("api/Register/islastname")]
+        public async Task<ActionResult> IsLastName(SingleString user)
+        {
+            SingleString nameDispatch = new();
+
+            //ToDo name politics
 
             return Ok(nameDispatch);
         }
 
         [HttpPost]
         [Route("api/Register/ispassword")]
-        public async Task<ActionResult> IsPassword(FastPassword passwordReceive)
+        public async Task<ActionResult> IsPassword(SingleString passwordReceive)
         {
-            FastPassword passwordDispatch = new();
+            SingleString passwordDispatch = new();
 
             if (passwordReceive == null)
             {
                 return BadRequest();
             }
-            if (passwordReceive.Password == null)
+            if (passwordReceive.Data == null)
             {
-                passwordReceive.Password = "The Password field is required.";
+                passwordReceive.Data = "The Password field is required.";
 
                 return BadRequest(passwordReceive);
-            }            
+            }
 
-            passwordDispatch.Password = passwordPolicy(passwordReceive.Password).Result;
+            passwordDispatch.Data = passwordPolicy(passwordReceive.Data).Result;
 
             return Ok(passwordDispatch);
         }

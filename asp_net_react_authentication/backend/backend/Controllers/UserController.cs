@@ -36,7 +36,7 @@ namespace WebApp.Controllers
             return user;
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("api/User/isemail")]
         public async Task<ActionResult> IsEmail(FastEmail email)
         {
@@ -48,9 +48,9 @@ namespace WebApp.Controllers
             }            
 
             return Ok();
-        }
+        }*/
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("api/User/isname")]
         public async Task<ActionResult> IsUserName(FastUserName user)
         {
@@ -62,16 +62,32 @@ namespace WebApp.Controllers
             }
 
             return Ok();
-        }
+        }*/
 
         [HttpPost]
         [Route("api/User")]
         public async Task<ActionResult> Create(AppUser user)
         {
+            IdByEmail userIdByEmail = new();
+            userIdByEmail.Email = user.Email;
+            userIdByEmail.Id = user.Id;
+
+            IdByUserName userIdByUserName = new();
+            userIdByUserName.UserName = user.UserName;
+            userIdByUserName.Id = user.Id;
+
             await _context.Users.AddAsync(user);
+            await _context.IdsEmails.AddAsync(userIdByEmail);
+            await _context.IdsUsers.AddAsync(userIdByUserName);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+            var actionName = nameof(GetById);
+            var routeValue = new { id = user.Id };
+
+            SingleString responceObj = new();
+            responceObj.Data = "New user successfully created.";
+
+            return CreatedAtAction(actionName, routeValue, responceObj);
         }
 
         [HttpPut]
