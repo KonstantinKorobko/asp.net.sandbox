@@ -9,6 +9,7 @@ async function HelperGetResponseObj(response) {
                         return errorObj400;
                 case 404:
                     const errorObj404 = {Data: error.response.data.data};
+                    console.log(error.response.data);
                         return errorObj404;
                 default:
                     console.log(error.response.data);

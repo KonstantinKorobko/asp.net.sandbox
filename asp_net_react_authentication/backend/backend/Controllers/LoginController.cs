@@ -12,15 +12,6 @@ using WebApp.Models;
 
 namespace backend.Controllers
 {
-    //del later
-   /* public class ResultOut
-    {
-        public string? UserName { get; set; }
-        public Guid Id { get; set; }
-    }*/
-    //del later
-
-
     [ApiController]
     [Route("api/[controller]")]
     public class LoginController : Controller
@@ -41,21 +32,26 @@ namespace backend.Controllers
             //TODO password hash BCript?
             var user = await _context.IdsUsers.FindAsync(request.UserName);
 
+            SingleString nameDispatch = new();
+
             if (user == null) 
             {
-                return NotFound("User no found!");
+                nameDispatch.Data = "User not found.";
+                return NotFound(nameDispatch);
             }
 
             var userData = await _context.Users.FindAsync(user.Id);
 
             if (userData == null)
             {
-                return NotFound("User no found!");
+                nameDispatch.Data = "User not found.";
+                return NotFound(nameDispatch);
             }
 
             if (userData.Password != request.Password)
             {
-                return NotFound("Wrong password!");
+                nameDispatch.Data = "Wrong password.";
+                return NotFound(nameDispatch);
             }
 
             string token = CreateJWT(user);

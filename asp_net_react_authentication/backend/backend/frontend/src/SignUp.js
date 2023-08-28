@@ -130,30 +130,30 @@ const SignUp = () => {
     }
 
     return (
-        <div>
-            <h2>Register</h2>
-            <form >
-                User name:      <input type="text" value={UserName} onChange={handleAddUserName} name="login" />
-                <p className="errorText">{UserNameStatus}</p>
-                <br></br>
-                E-mail:     <input type="text" value={Email} onChange={handleAddEmail} name="email" />
-                <p className="errorText">{EmailStatus}</p>
-                <br></br>
-                FirstMidName:   <input type="text" value={FirstMidName} onChange={handleFirstMidName} name="first_mid_name" />
-                <p className="errorText">{FirstMidNameStatus}</p>
-                <br></br>
-                LastName:   <input type="text" value={LastName} onChange={handleLastName} name="last_name" />
-                <p className="errorText">{LastNameStatus}</p>
-                <br></br>
-                Password:   <input type="password" value={Password} onChange={handlePassword} name="password" />
-                <p className="errorText">{PasswordStatus}</p>
-                <br></br>
-                Confirm password:   <input type="password" value={ConfirmPassword} onChange={handleConfirmPassword} name="confirm_password" />
-                <p className="errorText">{ConfirmPasswordStatus}</p>
-                <br></br>
-                Create new account: <input type="button" onClick={handleOnClickCreate} name="create" value="create" />
-            </form>
-        </div>
+            <div>
+                <h2>Register</h2>
+                <form >
+                    User name:      <input type="text" value={UserName} onChange={handleAddUserName} name="login" />
+                    <p className="errorText">{UserNameStatus}</p>
+                    <br></br>
+                    E-mail:     <input type="text" value={Email} onChange={handleAddEmail} name="email" />
+                    <p className="errorText">{EmailStatus}</p>
+                    <br></br>
+                    FirstMidName:   <input type="text" value={FirstMidName} onChange={handleFirstMidName} name="first_mid_name" />
+                    <p className="errorText">{FirstMidNameStatus}</p>
+                    <br></br>
+                    LastName:   <input type="text" value={LastName} onChange={handleLastName} name="last_name" />
+                    <p className="errorText">{LastNameStatus}</p>
+                    <br></br>
+                    Password:   <input type="password" value={Password} onChange={handlePassword} name="password" />
+                    <p className="errorText">{PasswordStatus}</p>
+                    <br></br>
+                    Confirm password:   <input type="password" value={ConfirmPassword} onChange={handleConfirmPassword} name="confirm_password" />
+                    <p className="errorText">{ConfirmPasswordStatus}</p>
+                    <br></br>
+                    Create new account: <input type="button" onClick={handleOnClickCreate} name="create" value="create" />
+                </form>
+            </div>
     )
 }
 
