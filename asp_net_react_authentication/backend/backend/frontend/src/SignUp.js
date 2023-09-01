@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import ControllerPost from './ControllerPost';
-import HelperGetResponseObj from './HelperGetResponseObj';
+import HelperGetResponseObj from './HelperResponse';
 
 const SignUp = () => {
     const [UserName, setUserName] = useState('Mino');

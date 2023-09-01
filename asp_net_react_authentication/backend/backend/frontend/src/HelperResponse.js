@@ -1,4 +1,4 @@
-async function HelperGetResponseObj(response) {
+async function HelperResponse(session_interface, response) {
     return await response
     .then((_response) => _response.data)
     .catch(function (error) {
@@ -28,4 +28,4 @@ async function HelperGetResponseObj(response) {
 })
 }
 
-export default HelperGetResponseObj;
+export default HelperResponse;

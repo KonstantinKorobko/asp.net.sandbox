@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import ControllerPost from './ControllerPost';
-import HelperGetResponseObj from './HelperGetResponseObj';
+//import ControllerPost from './ControllerPost';
+//import HelperGetResponseObj from './HelperResponse';
 
 const SignIn = (props) => {
-    const [UserName, setUserName] = useState("");
-    const [Password, setPassword] = useState("");
+    const [UserName, setUserName] = useState("Nino");
+    const [Password, setPassword] = useState("12345");
     const [Result, setResult] = useState("");
 
     const navigate = useNavigate();
@@ -25,7 +25,12 @@ const SignIn = (props) => {
             UserName: UserName,
             Password: Password
         };
-        const result = await HelperGetResponseObj(ControllerPost(loginUrl, loginData));
+        const requestObj = {
+            method: "post",
+            url: loginUrl,
+            data: loginData
+        }
+        const result = await props.appInterface.Controller(requestObj);
         setResult(result.Data);
     }
 
