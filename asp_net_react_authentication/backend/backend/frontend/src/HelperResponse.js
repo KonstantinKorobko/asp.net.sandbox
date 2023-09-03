@@ -1,16 +1,27 @@
-async function HelperResponse(session_interface, response) {
+async function HelperResponse(api, response) {
     return await response
-    .then((_response) => _response.data)
+    .then((_response) => {
+        const result = {
+            status: _response.status,
+            data: _response.data
+        }
+        return result;
+    })
     .catch(function (error) {
         if (error.response) {
             switch (error.response?.status) {
                 case 400:
-                    const errorObj400 = {Data: error.response.data.errors.Data[0]};
-                        return errorObj400;
+                    const errorObj400 = {
+                        status: error.response.status,
+                        Data: error.response.data.errors.Data[0]
+                    };
+                    return errorObj400;
                 case 404:
-                    const errorObj404 = {Data: error.response.data.data};
-                    console.log(error.response.data);
-                        return errorObj404;
+                    const errorObj404 = {
+                        status: error.response.status,
+                        Data: error.response.data.data
+                    };
+                    return errorObj404;
                 default:
                     console.log(error.response.data);
                     console.log(error.response.status);

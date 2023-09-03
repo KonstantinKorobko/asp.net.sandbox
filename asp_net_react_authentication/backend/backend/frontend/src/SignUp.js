@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import ControllerPost from './ControllerPost';
-import HelperGetResponseObj from './HelperResponse';
 
-const SignUp = () => {
+const SignUp = (props) => {
     const [UserName, setUserName] = useState('Mino');
     const [UserNameStatus, setUserNameStatus] = useState("");
     const [Email, setEmail] = useState("a1@mail.com");
@@ -46,60 +44,74 @@ const SignUp = () => {
     }
 
     const handleOnClickCreate = async () => {
-        const userNameObj = {Data: UserName};
-        const resultUserName = await HelperGetResponseObj(ControllerPost(isNameUrl, userNameObj));
-        if (resultUserName.Data === "The Data field is required.") {
-            setUserNameStatus("The User name field is required!");
+        const requestObj = {
+            method: "post",
+            url: "",
+            data: {Data: ""}
+        }
+
+        requestObj.url = isNameUrl;
+        requestObj.data.Data = UserName;
+        const resultUserName = await props.api.controller(requestObj);
+
+        if (resultUserName.status === 200) {
+            setUserNameStatus("User name already exists.");
             return;
         }
-        else if (resultUserName.data === "User name already exists.")
-        {
-            setUserNameStatus("User name already exists.");
+        else if (resultUserName.status === 400) {
+            setUserNameStatus("The User name field is required.");
             return;
         }
         else{
             setUserNameStatus("");
         }
 
-        const emailObj = {Data: Email};
-        const resultEmail = await HelperGetResponseObj(ControllerPost(isEmailUrl, emailObj));
-        if (resultEmail.Data === "The Data field is required.") {
-            setEmailStatus("The E-mail field is required!");
+        requestObj.url = isEmailUrl;
+        requestObj.data.Data = Email;
+        const resultEmail = await props.api.controller(requestObj);
+
+        if (resultEmail.status === 200) {
+            setEmailStatus("Email already registered.");
             return;
         }
-        else if (resultEmail.data === "Email already registered.")
-        {
-            setEmailStatus("Email already registered.");
+        else if (resultEmail.status === 400) {
+            setEmailStatus("The E-mail field is required.");
             return;
         }
         else{
             setEmailStatus("");
         }
 
-        const firstMidNameObj = {Data: FirstMidName};
-        const resultFirstMidName = await HelperGetResponseObj(ControllerPost(isFirstMidNameUrl, firstMidNameObj));
-        if (resultFirstMidName.Data === "The Data field is required.") {
-            setFirstMidNameStatus("The FirstMidName field is required!");
+        requestObj.url = isFirstMidNameUrl;
+        requestObj.data.Data = FirstMidName;
+        const resultFirstMidName = await props.api.controller(requestObj);
+
+        if (resultFirstMidName.status === 400) {
+            setFirstMidNameStatus("The FirstMidName field is required.");
             return;
         }
         else{
             setFirstMidNameStatus("");
         }
 
-        const lastNameObj = {Data: LastName};
-        const resultLastName = await HelperGetResponseObj(ControllerPost(isLastNameUrl, lastNameObj));
-        if (resultLastName.Data === "The Data field is required.") {
-            setLastNameStatus("The Last Name field is required!");
+        requestObj.url = isLastNameUrl;
+        requestObj.data.Data = LastName;
+        const resultLastName = await props.api.controller(requestObj);
+
+        if (resultLastName.status === 400) {
+            setLastNameStatus("The Last Name field is required.");
             return;
         }
         else{
             setLastNameStatus("");
         }        
 
-        const passwordObj = {Data: Password};
-        const resultPassword = await HelperGetResponseObj(ControllerPost(isPasswordUrl, passwordObj));
-        if (resultPassword.Data === "The Data field is required.") {
-            setPasswordStatus("The Password field is required!");
+        requestObj.url = isPasswordUrl;
+        requestObj.data.Data = Password;
+        const resultPassword = await props.api.controller(requestObj);
+
+        if (resultPassword.status === 400) {
+            setPasswordStatus("The Password field is required.");
             return;
         }
         else{
@@ -107,7 +119,7 @@ const SignUp = () => {
         }
 
         if (Password !== ConfirmPassword) {
-            setConfirmPasswordStatus("The Password not same!");
+            setConfirmPasswordStatus("The Password not same.");
             return;
         }
 
@@ -119,8 +131,11 @@ const SignUp = () => {
             LastName: LastName
         };        
 
-        const resultNewUser = await HelperGetResponseObj(ControllerPost(createNewUserUrl, userObj));
-        if (resultNewUser.data === "New user successfully created.") {
+        requestObj.url = createNewUserUrl;
+        requestObj.data = userObj;
+
+        const resultNewUser = await props.api.controller(requestObj);
+        if (resultNewUser.status === 201) {
             navigate('/spaApp/login');
         }
         else

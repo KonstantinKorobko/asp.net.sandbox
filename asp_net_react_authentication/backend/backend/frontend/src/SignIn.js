@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-//import ControllerPost from './ControllerPost';
-//import HelperGetResponseObj from './HelperResponse';
 
 const SignIn = (props) => {
     const [UserName, setUserName] = useState("Nino");
@@ -30,8 +28,16 @@ const SignIn = (props) => {
             url: loginUrl,
             data: loginData
         }
-        const result = await props.appInterface.Controller(requestObj);
-        setResult(result.Data);
+        const result = await props.api.controller(requestObj);
+
+        if (result.status === 200) {
+            console.log(result.status);
+            props.api.setAccessJWT(result.data);
+        }
+        else {
+            console.log(result);
+            setResult(result.Data);
+        }        
     }
 
     return (

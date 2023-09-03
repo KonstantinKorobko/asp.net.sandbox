@@ -36,7 +36,7 @@ namespace backend.Controllers
 
             if (user == null) 
             {
-                nameDispatch.Data = "User not found.";
+                nameDispatch.Data = "Wrong login or password.";
                 return NotFound(nameDispatch);
             }
 
@@ -44,13 +44,13 @@ namespace backend.Controllers
 
             if (userData == null)
             {
-                nameDispatch.Data = "User not found.";
+                nameDispatch.Data = "Wrong login or password.";
                 return NotFound(nameDispatch);
             }
 
             if (userData.Password != request.Password)
             {
-                nameDispatch.Data = "Wrong password.";
+                nameDispatch.Data = "Wrong login or password.";
                 return NotFound(nameDispatch);
             }
 

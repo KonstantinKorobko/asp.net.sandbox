@@ -12,24 +12,24 @@ import HelperResponse from './HelperResponse';
 import ControllerPost from './ControllerPost';
 
 function App() {
-  const sessionJWT = useRef("my JWT");
-  const setSessionJWT = (new_jwt) => {
-    sessionJWT.current = new_jwt;
+  const accessJWT = useRef("");
+  const setAccessJWT = (new_jwt) => {
+    accessJWT.current = new_jwt;
   }
-  const getSessionJWT = () => {
-    return sessionJWT.current;
+  const getAccessJWT = () => {
+    return accessJWT.current;
   }
 
-  const  Controller = async (request_obj) => {
+  const  controller = async (request_obj) => {
     switch (request_obj.method) {
       case "post":
         const requestObj = {
-          sessionJWT: getSessionJWT(),
+          accessJWT: getAccessJWT(),
           method: request_obj.method,
           url: request_obj.url,
           data: request_obj.data
         };
-        return await HelperResponse(sessionInterface, ControllerPost(requestObj));
+        return await HelperResponse(api, ControllerPost(requestObj));
     
       default:
         break;
@@ -37,19 +37,17 @@ function App() {
     
   }
 
-  const appInterface = {
-    Controller
-  };
-  const sessionInterface = {
-    setSessionJWT,
-    getSessionJWT
+  const api = {
+    controller,
+    setAccessJWT,
+    getAccessJWT
   };
 
   return (
       <Routes>
         <Route path="/spaApp" element={<Home />} />
-        <Route path="/spaApp/login" element={<SignIn appInterface={appInterface} />} />
-        <Route path="/spaApp/register" element={<SignUp />} />
+        <Route path="/spaApp/login" element={<SignIn api={api} />} />
+        <Route path="/spaApp/register" element={<SignUp api={api} />} />
       </Routes>
   )
 }
