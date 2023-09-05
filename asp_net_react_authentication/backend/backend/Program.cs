@@ -1,11 +1,9 @@
-using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using WebApp;
 using WebApp.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.IdentityModel.Tokens;
 using backend.Helpers;
 
@@ -31,30 +29,6 @@ builder.Services.AddSpaStaticFiles(configuration => {
     configuration.RootPath = "frontend/build";
 });
 //*!
-
-/*builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
-    .AddNegotiate();
-builder.Services.AddAuthorization(options =>
-{
-    options.FallbackPolicy = options.DefaultPolicy;
-});
-
-builder.Services.AddAuthorization(options =>
-{
-    options.FallbackPolicy = options.DefaultPolicy;
-});*/
-
-/*builder.Services.AddCors(options =>
-{
-    options.AddPolicy("MyAllowSpecificOrigins",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:3000")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-        });
-});*/
 
 builder.Services.AddControllers();
 
@@ -88,8 +62,6 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
     DbUsersInitializer.Initialize(context);
 }
-
-
 
 app.UseStaticFiles();
 app.UseHttpsRedirection();
