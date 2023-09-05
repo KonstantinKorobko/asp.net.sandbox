@@ -135,6 +135,7 @@ const SignUp = (props) => {
         requestObj.data = userObj;
 
         const resultNewUser = await props.api.controller(requestObj);
+        
         if (resultNewUser.status === 201) {
             navigate('/spaApp/login');
         }

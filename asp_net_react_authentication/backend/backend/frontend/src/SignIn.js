@@ -30,10 +30,11 @@ const SignIn = (props) => {
         };
         const result = await props.api.controller(requestObj);
 
+        props.api.handleSetAppState(result.status);
+
         if (result.status === 201) {
-            //console.log(result.status);
-            //console.log(result.data.data);
             props.api.setAccessJWT(result.data.data);
+            navigate('/spaApp');
         }
         else if (result.status === 401) {
             console.log(result);
