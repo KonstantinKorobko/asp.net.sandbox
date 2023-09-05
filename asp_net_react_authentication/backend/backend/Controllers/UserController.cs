@@ -1,12 +1,12 @@
 ﻿using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    [ApiController]    
-    //[ProducesResponseType(StatusCodes.Status201Created)]
-    //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize]
+    [ApiController]   
     public class UserController : ControllerBase
     {
         private readonly UserDbContext _context;

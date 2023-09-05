@@ -1,10 +1,12 @@
 ﻿using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApp;
 
 namespace backend.Controllers
 {
+    [Authorize]
     [ApiController]
     public class RegisterController : Controller
     {
@@ -15,6 +17,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("api/Register/isemail")]
         public async Task<ActionResult> IsEmail(SingleString email)
         {
@@ -37,6 +40,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("api/Register/isname")]
         public async Task<ActionResult> IsUserName(SingleString user)
         {
@@ -59,6 +63,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("api/Register/isfirstmidname")]
         public async Task<ActionResult> IsFirstMidName(SingleString user)
         {
@@ -70,6 +75,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("api/Register/islastname")]
         public async Task<ActionResult> IsLastName(SingleString user)
         {
@@ -81,6 +87,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("api/Register/ispassword")]
         public async Task<ActionResult> IsPassword(SingleString passwordReceive)
         {
@@ -92,9 +99,9 @@ namespace backend.Controllers
             }
             if (passwordReceive.Data == null)
             {
-                passwordReceive.Data = "The Password field is required.";
+                passwordDispatch.Data = "The Password field is required.";
 
-                return BadRequest(passwordReceive);
+                return BadRequest(passwordDispatch);
             }
 
             passwordDispatch.Data = passwordPolicy(passwordReceive.Data).Result;

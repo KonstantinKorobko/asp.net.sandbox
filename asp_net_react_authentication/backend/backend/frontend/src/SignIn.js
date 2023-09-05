@@ -27,17 +27,18 @@ const SignIn = (props) => {
             method: "post",
             url: loginUrl,
             data: loginData
-        }
+        };
         const result = await props.api.controller(requestObj);
 
-        if (result.status === 200) {
-            console.log(result.status);
-            props.api.setAccessJWT(result.data);
+        if (result.status === 201) {
+            //console.log(result.status);
+            //console.log(result.data.data);
+            props.api.setAccessJWT(result.data.data);
         }
-        else {
+        else if (result.status === 401) {
             console.log(result);
             setResult(result.Data);
-        }        
+        }
     }
 
     return (

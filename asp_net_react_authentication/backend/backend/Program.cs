@@ -58,7 +58,8 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddControllers();
 
-/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//*Auth
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -73,7 +74,8 @@ builder.Services.AddControllers();
         };
     });
 
-builder.Services.AddAuthorization();*/
+builder.Services.AddAuthorization();
+//*
 
 var app = builder.Build();
 
@@ -87,10 +89,13 @@ using (var scope = app.Services.CreateScope())
     DbUsersInitializer.Initialize(context);
 }
 
+
+
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 //*!spa
