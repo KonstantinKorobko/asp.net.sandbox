@@ -1,5 +1,4 @@
 import './App.css';
-//import TestCORS from "./TestCORS";
 import {
   Routes, Route
 } from "react-router-dom";
@@ -17,7 +16,7 @@ function App() {
   const refreshRT = useRef("RT");
 
   const [appState, setAppState] = useState(401);
-  const [appRole, setAppRole] = useState("user");
+  const [appRole, setAppRole] = useState("");
 
   const setAccessJWT = (new_jwt) => {
     accessJWT.current = new_jwt;

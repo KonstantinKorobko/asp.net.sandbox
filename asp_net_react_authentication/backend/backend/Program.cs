@@ -6,6 +6,9 @@ using WebApp.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using backend.Helpers;
+using System.Text;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,8 +27,8 @@ var connectionString = $"server={host};port={port};database={db};user={userName}
 builder.Services.AddDbContext<UserDbContext>(connection => connection.UseMySQL(connectionString));
 
 //*!spa
-builder.Services.AddSpaStaticFiles(configuration => {
-    
+builder.Services.AddSpaStaticFiles(configuration =>
+{
     configuration.RootPath = "frontend/build";
 });
 //*!
@@ -39,12 +42,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidIssuer = AuthenticationPar.ISSUER,
+            //ValidIssuer = AuthenticationPar.ISSUER,
+            ValidIssuer = "spaApp",
             ValidateAudience = true,
-            ValidAudience = AuthenticationPar.AUDIENCE,
+            //ValidAudience = AuthenticationPar.AUDIENCE,
+            ValidAudience = "localhost:44427",
             ValidateLifetime = true,
-            IssuerSigningKey = AuthenticationPar.GetSymmetricSecurityKey(),
-            ValidateIssuerSigningKey = true,
+            //IssuerSigningKey = AuthenticationPar.GetSymmetricSecurityKey(),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("tosi top secret key for authentication")),
+            ValidateIssuerSigningKey = true
         };
     });
 
@@ -91,7 +97,8 @@ else
     {
         client.UseSpaStaticFiles();
 
-        client.UseSpa(spa => {
+        client.UseSpa(spa =>
+        {
 
             spa.Options.SourcePath = "frontend";
 

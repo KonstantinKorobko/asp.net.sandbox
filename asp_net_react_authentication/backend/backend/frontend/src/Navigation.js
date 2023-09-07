@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import NavigationUser from './NavigationUser';
 
 const Navigation = (props) => {
     const navigate = useNavigate();
@@ -16,9 +17,9 @@ const Navigation = (props) => {
     };
 
     const initNavigation = () => {
-        const appRole = props.role;
+        const role = props.api.handleGetAppRole();
 
-        switch (appRole) {
+        switch (role) {
             case "admin":                
                 return roleAdmin();
 
@@ -46,21 +47,21 @@ const Navigation = (props) => {
             </table>    
         )
     }
+
     const roleUser = () => {
-        return (
+        return  (
             <table>
                 <tbody>
                     <tr className='main_menu'>
                         <td>
-                            <input type="button" name="get_user_data" value="get user data" />
+                            <NavigationUser api={props.api}/>
                         </td>
                         <td>
                             <input type="button" onClick={signOut} name="sign_up" value="sign out" />
                         </td>
                     </tr> 
                 </tbody>
-            </table>    
-        )
+            </table>)
     }
 
     const roleDefault = () => {

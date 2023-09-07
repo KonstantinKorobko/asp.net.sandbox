@@ -33,11 +33,11 @@ const SignIn = (props) => {
         props.api.handleSetAppState(result.status);
 
         if (result.status === 201) {
-            props.api.setAccessJWT(result.data.data);
+            props.api.setAccessJWT(result.data.jwt);
+            props.api.handleSetAppRole(result.data.role);
             navigate('/spaApp');
         }
         else if (result.status === 401) {
-            console.log(result);
             setResult(result.Data);
         }
     }

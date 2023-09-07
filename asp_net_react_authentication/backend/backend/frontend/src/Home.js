@@ -17,14 +17,13 @@ const Home = (props) => {
     }
     
     const state201 = () => {
-        const role = props.api.handleGetAppRole();
-
+        const role = props.api.handleGetAppRole();        
         const title = "Welcome " + role + " !"
 
         return (
             <div className="container_home">
                 <h1>{title}</h1>
-                <Navigation role={role}/>
+                <Navigation api={props.api}/>
             </div>
         )
     }
@@ -33,7 +32,7 @@ const Home = (props) => {
         return (
             <div className="container_home">
                 <h1>Please login or register.</h1>         
-                <Navigation/>
+                <Navigation api={props.api}/>
             </div>
         )
     }

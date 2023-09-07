@@ -15,8 +15,8 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        [Route("api/User")]
+        [HttpPost]
+        [Route("api/User/getusers")]
         public ActionResult<IEnumerable<AppUser>> GetUsers()
         {
             return _context.Users;
@@ -65,6 +65,7 @@ namespace WebApp.Controllers
         }*/
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("api/User")]
         public async Task<ActionResult> Create(AppUser user)
         {

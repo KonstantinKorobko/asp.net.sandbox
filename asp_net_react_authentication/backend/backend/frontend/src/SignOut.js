@@ -10,6 +10,7 @@ const SignOut = (props) => {
         props.api.handleSetAppState(401);
         props.api.setAccessJWT("JWT");
         props.api.setRefreshRT("RT");
+        props.api.handleSetAppRole("");
 
         navigate('/spaApp');
     }
