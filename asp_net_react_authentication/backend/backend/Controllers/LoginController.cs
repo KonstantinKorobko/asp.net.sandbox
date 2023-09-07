@@ -59,7 +59,7 @@ namespace backend.Controllers
             LoginResponse loginResponse = new();
             loginResponse.JWT = CreateJWT(user);
             //loginResponse.Id = user.Id;
-            loginResponse.Role = "user";
+            loginResponse.Role = userData.Role;
             /*
              The HTTP 201 Created success status response code indicates that the request has succeeded and has led to the creation of a resource.
             The new resource, or a description and link to the new resource,

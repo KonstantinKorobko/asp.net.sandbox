@@ -22,6 +22,12 @@ async function HelperResponse(api, response) {
                         Data: error.response.data.data
                     };
                     return errorObj401;
+                case 404:
+                    const errorObj404 = {
+                        status: error.response.status,
+                        Data: error.response.data.data
+                    };
+                    return errorObj404;
                 default:
                     console.log(error.response.data);
                     console.log(error.response.status);

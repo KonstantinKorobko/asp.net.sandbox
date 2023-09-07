@@ -56,10 +56,13 @@ const Navigation = (props) => {
                         <td>
                             <NavigationUser api={props.api}/>
                         </td>
+                        
+                    </tr>
+                    <tr>
                         <td>
                             <input type="button" onClick={signOut} name="sign_up" value="sign out" />
                         </td>
-                    </tr> 
+                    </tr>
                 </tbody>
             </table>)
     }

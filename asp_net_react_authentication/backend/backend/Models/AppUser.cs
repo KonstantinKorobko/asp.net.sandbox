@@ -18,6 +18,7 @@ namespace WebApp.Models
         public string? FirstMidName { get; set; }
         [Required]
         public string? LastName { get; set; }
+        public string? Role { get; set; } = "user";
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime ModifitedDate { get; set; } = DateTime.Now;
     }

@@ -1,6 +1,7 @@
 ﻿using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -19,21 +20,27 @@ namespace WebApp.Controllers
         [Route("api/User/getusers")]
         public ActionResult<IEnumerable<AppUser>> GetUsers()
         {
+            string id = User.FindFirstValue(ClaimTypes.Name);
+            Console.WriteLine("User Id: " + id);
             return _context.Users;
         }
 
-        [HttpGet("{Id:Guid}")]
-        [Route("api/User")]
-        public async Task<ActionResult<AppUser>> GetById(Guid id)
+        [HttpPost]
+        [Route("api/User/getuser")]
+        public async Task<ActionResult<User>> GetById()
         {
-            var user = await _context.Users.FindAsync(id);
+            //Guid guid;
+            Guid.TryParse(User.FindFirstValue(ClaimTypes.Name), out Guid guid);
+            AppUser appUser = await _context.Users.FindAsync(guid);
 
-            if (user == null)
+            if (appUser == null)
             {
                 return NotFound();
             }
 
-            return user;
+            User user = new(appUser);
+
+            return Created("", user);
         }
 
         /*[HttpPost]

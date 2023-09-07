@@ -52,6 +52,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("tosi top secret key for authentication")),
             ValidateIssuerSigningKey = true
         };
+
+        /*options.Events = new JwtBearerEvents
+        {
+            OnForbidden = context =>
+            {
+
+            }
+        };*/
     });
 
 builder.Services.AddAuthorization();

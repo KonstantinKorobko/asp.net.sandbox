@@ -1,9 +1,12 @@
 //import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import UserCard from './UserCard';
 
 const NavigationUser = (props) => {
+    const [browsingData, setBrowsingData] = useState();
     //const navigate = useNavigate();
 
-    const getUserDataUrl = 'https://localhost:7129/api/User/getusers';
+    const getUserDataUrl = 'https://localhost:7129/api/User/getuser';
 
     const handleOnClickGetUserData = async () =>{
         const loginData = {            
@@ -15,14 +18,10 @@ const NavigationUser = (props) => {
         };
         const result = await props.api.controller(requestObj);
 
-        //props.api.handleSetAppState(result.status);
-        console.log(result.status);
-
+        props.api.handleSetAppState(result.status);
+        
         if (result.status === 201) {
-            console.log(result.data);
-        }
-        else if (result.status === 401) {
-            //setResult(result.Data);
+            setBrowsingData(<UserCard user={result.data}/>);
         }
     }
     return (
@@ -32,7 +31,10 @@ const NavigationUser = (props) => {
                     <td>
                         <input type="button" onClick={handleOnClickGetUserData} name="get_user_data" value="get user data" />
                     </td>
-                </tr> 
+                </tr>
+                <tr>
+                    <td>{browsingData}</td>
+                </tr>
             </tbody>
         </table>    
     )
