@@ -9,6 +9,8 @@ using backend.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Options;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,21 +37,19 @@ builder.Services.AddSpaStaticFiles(configuration =>
 
 builder.Services.AddControllers();
 
-//*Auth
+AuthenticationPar paramAuthentication = builder.Configuration.GetSection(AuthenticationPar.Authentication).Get<AuthenticationPar>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            //ValidIssuer = AuthenticationPar.ISSUER,
-            ValidIssuer = "spaApp",
+            ValidIssuer = paramAuthentication.Issuer,
             ValidateAudience = true,
-            //ValidAudience = AuthenticationPar.AUDIENCE,
-            ValidAudience = "localhost:44427",
+            ValidAudience = paramAuthentication.Audience,
             ValidateLifetime = true,
-            //IssuerSigningKey = AuthenticationPar.GetSymmetricSecurityKey(),
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("tosi top secret key for authentication")),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(paramAuthentication.IssuerSigningKey)),
             ValidateIssuerSigningKey = true
         };
 

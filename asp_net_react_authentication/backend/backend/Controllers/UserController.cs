@@ -20,8 +20,7 @@ namespace WebApp.Controllers
         [Route("api/User/getusers")]
         public ActionResult<IEnumerable<AppUser>> GetUsers()
         {
-            string id = User.FindFirstValue(ClaimTypes.Name);
-            Console.WriteLine("User Id: " + id);
+            //string id = User.FindFirstValue(ClaimTypes.Name);
             return _context.Users;
         }
 
@@ -42,34 +41,6 @@ namespace WebApp.Controllers
 
             return Created("", user);
         }
-
-        /*[HttpPost]
-        [Route("api/User/isemail")]
-        public async Task<ActionResult> IsEmail(FastEmail email)
-        {
-            var userEmail = await _context.IdsEmails.FindAsync(email.Email);
-
-            if (userEmail == null)
-            {
-                return NotFound("E-mail not found.");
-            }            
-
-            return Ok();
-        }*/
-
-        /*[HttpPost]
-        [Route("api/User/isname")]
-        public async Task<ActionResult> IsUserName(FastUserName user)
-        {
-            var userName = await _context.IdsUsers.FindAsync(user.UserName);
-
-            if (userName == null)
-            {
-                return NotFound("User name not found.");
-            }
-
-            return Ok();
-        }*/
 
         [HttpPost]
         [AllowAnonymous]

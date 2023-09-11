@@ -1,14 +1,12 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
-namespace backend.Helpers
+﻿namespace backend.Helpers
 {
     public class AuthenticationPar
     {
-        public const string ISSUER = "MyAuthServer";
-        public const string AUDIENCE = "MyAuthClient";
-        const string KEY = "mysupersecret_secretkey!123";
-        public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
-            new(Encoding.UTF8.GetBytes(KEY));
+        public const string Authentication = "Authentication";
+
+        public string Issuer { get; set; } = String.Empty;
+        public string Audience { get; set; } = String.Empty;
+        public string IssuerSigningKey { get; set; } = String.Empty;
+        public string JWTExpire { get; set; } = String.Empty;
     }
 }
